@@ -1,0 +1,23 @@
+{% extends "base.html" %} 
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="card shadow-sm p-4">
+    <h2 class="mb-4">Add product</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" action="{{ form.helper.form_action }}" class="needs-validation" novalidate>
+        {% csrf_token %}
+        {{ form|crispy }}
+           <button type="submit" class="btn btn-primary mt-3">
+        {{ form.submit_label|default:"Submit" }}
+    </button>
+    </form>
+    
+</div>
+{% endblock %}
