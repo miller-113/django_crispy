@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "django_forms.product",
   
+    "django_tables2",
     "crispy_forms",
     "crispy_bootstrap5",
   

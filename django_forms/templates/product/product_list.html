@@ -1,34 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Product List</h2>
-    <table class="table table-bordered table-striped" id="productTable">
-        <thead class="table-dark">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>name1</td>
-                <td>price1</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>name2</td>
-                <td>price3</td>
-            </tr>
-        </tbody>
-    </table>
-    <script>
-        $(document).ready(function() {
-            $("#productTable").tablesorter({
-                theme: 'bootstrap',
-                headerTemplate: '{content} {icon}',
-            });
-        });
-    </script>
+    <div class="container mt-4">
+        <h2 class="mb-4">Product List</h2>
+        {% load django_tables2 %}
+        {% render_table table %}
+    </div>
 {% endblock %}
