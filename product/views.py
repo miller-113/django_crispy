@@ -6,7 +6,7 @@ from django.views.generic import ListView
 from .models import Product
 
 class ProductCreateView(FormView):
-    template_name = "product_form.html"
+    template_name = "product/product_form.html"
     form_class = ProductForm
     success_url = reverse_lazy("add_product")
 
@@ -18,5 +18,5 @@ class ProductCreateView(FormView):
 
 class ProductListView(ListView):
     model = Product
-    template_name = "product_list.html"
+    template_name = "product/product_list.html"
     context_object_name = "products"
