@@ -1,15 +1,15 @@
-from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.contrib import messages
+from django.views.generic.edit import FormView
 from .forms import ProductForm
 
-def product_view(request):
-    if request.method == "POST":
-        form = ProductForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Successful added!")
-            return redirect("add_product")
-    else:
-        form = ProductForm()
 
-    return render(request, "product_form.html", {"form": form})
+class ProductCreateView(FormView):
+    template_name = "product_form.html"
+    form_class = ProductForm
+    success_url = reverse_lazy("add_product")
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, "Successful added!")
+        return super().form_valid(form)
