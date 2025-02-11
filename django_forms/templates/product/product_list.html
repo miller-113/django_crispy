@@ -1,9 +1,74 @@
+{# templates/product/product_list.html #}
 {% extends "base.html" %}
 
 {% block content %}
     <div class="container mt-4">
         <h2 class="mb-4">Product List</h2>
+        
+        {# Добавляем Font Awesome для иконок #}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        
+        <style>
+            /* Стили для сортировки */
+            .sortable {
+                cursor: pointer;
+                position: relative;
+            }
+            
+            .sortable i {
+                margin-left: 5px;
+                font-size: 0.8em;
+            }
+            
+            .asc i:before {
+                content: "\f0de"; /* Font Awesome стрелка вверх */
+            }
+            
+            .desc i:before {
+                content: "\f0dd"; /* Font Awesome стрелка вниз */
+            }
+            
+            /* Подсветка при наведении */
+            .sortable:hover {
+                background-color: rgba(255,255,255,0.1);
+            }
+        </style>
+
         {% load django_tables2 %}
         {% render_table table %}
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const headers = document.querySelectorAll('.sortable');
+            
+            headers.forEach(header => {
+                const url = new URL(window.location.href);
+                const orderBy = url.searchParams.get('sort');
+                
+                const columnName = header.textContent.trim().toLowerCase();
+                
+                if (orderBy === columnName) {
+                    header.classList.add('asc');
+                } else if (orderBy === '-' + columnName) {
+                    header.classList.add('desc');
+                }
+                
+                header.addEventListener('click', function() {
+                    let newOrder;
+                    
+                    if (header.classList.contains('asc')) {
+                        newOrder = '-' + columnName;
+                    } else if (header.classList.contains('desc')) {
+                        newOrder = columnName;
+                    } else {
+                        newOrder = columnName;
+                    }
+                    
+                    url.searchParams.set('sort', newOrder);
+                    window.location.href = url.toString();
+                });
+            });
+        });
+    </script>
 {% endblock %}
